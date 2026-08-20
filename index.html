@@ -119,118 +119,132 @@
         </div>
       </section>
 
-      <section id="about" class="about-section">
-        <figure class="photo-panel about-photo">
-          <img src="./assets/lab-microscope.jpg" alt="Healthcare professional checking samples with a microscope" />
-        </figure>
-
-        <div class="about-copy">
-          <h2>About <span>Finder Pharma</span></h2>
-          <p>
-            Finder Pharma is a pharmaceutical company committed to making
-            quality healthcare products accessible, reliable and affordable.
-            We believe good healthcare begins with quality, trust and
-            responsibility.
-          </p>
-          <a class="text-link" href="./quality.html">Know More About Us <span aria-hidden="true">&rarr;</span></a>
+      <!-- ── Therapeutic Focus Areas ── -->
+      <section class="focus-section" aria-label="Therapeutic Focus Areas">
+        <div class="focus-heading">
+          <h2>Therapeutic Focus Areas</h2>
+          <p>Targeted solutions across key medical disciplines, manufactured with absolute precision.</p>
         </div>
 
-        <div id="quality" class="value-grid">
-          <article>
-            <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="7"></circle>
-                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-              </svg>
-            </span>
-            <h3>Quality</h3>
-            <p>Quality is our priority</p>
+        <div class="focus-bento">
+          <!-- Pain Relief – large left card -->
+          <article class="focus-card focus-card--pain" tabindex="0" role="button"
+            data-category="Pain Relief" data-products="RESTMOL, RESTBRO" data-image="./assets/pain-relief-card.jpg">
+            <img src="./assets/pain-relief-card.jpg" alt="Pain relief medicines" />
+            <div class="focus-card-body">
+              <span class="focus-tag">CATEGORY</span>
+              <h3>Pain Relief</h3>
+              <p>Advanced analgesics designed for rapid onset and sustained management of acute and chronic pain.</p>
+            </div>
           </article>
-          <article>
-            <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4z"></path>
-              </svg>
-            </span>
-            <h3>Reliable</h3>
-            <p>Consistent and dependable</p>
+
+          <!-- Probiotics – top right card -->
+          <article class="focus-card focus-card--probiotics" tabindex="0" role="button"
+            data-category="Probiotics / Gut Health" data-products="PROTOCOCCUS®" data-image="./assets/probiotics-card.jpg">
+            <img src="./assets/probiotics-card.jpg" alt="Probiotics and gut health" />
+            <div class="focus-card-body">
+              <h3>Probiotics</h3>
+              <p>Restoring balance with scientifically proven microbiome support.</p>
+            </div>
           </article>
-          <article>
-            <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                <line x1="7" y1="7" x2="7.01" y2="7"></line>
-              </svg>
-            </span>
-            <h3>Affordable</h3>
-            <p>Healthcare for all</p>
+
+          <!-- Antibiotics – bottom left card -->
+          <article class="focus-card focus-card--antibiotics" tabindex="0" role="button"
+            data-category="Antibiotics" data-products="ADDCEF, EOUS TZ®, DIPEXTIL CV 325®, YORKMOX®, ADFOZEX®" data-image="./assets/antibiotics-card.jpg">
+            <img src="./assets/antibiotics-card.jpg" alt="Antibiotic capsules" />
+            <div class="focus-card-body">
+              <h3>Antibiotics</h3>
+              <p>Targeted antimicrobial therapies for diverse infections.</p>
+            </div>
           </article>
-          <article>
-            <span class="icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                <polyline points="9 11 11 13 15 9"></polyline>
-              </svg>
-            </span>
-            <h3>Responsible</h3>
-            <p>Committed to well-being</p>
+
+          <!-- Gastro Care – featured panel -->
+          <article class="focus-card focus-card--gastro focus-featured" tabindex="0" role="button"
+            data-category="Gastro / Acidity" data-products="PD STAR®" data-image="./assets/gastro-card.jpg">
+            <div class="focus-featured-inner">
+              <div class="focus-featured-text">
+                <span class="focus-tag focus-tag--specialty">SPECIALTY</span>
+                <h3>Gastro Care</h3>
+                <p>Comprehensive formulations for digestive health, offering relief and healing for complex gastrointestinal disorders.</p>
+                <span class="focus-view-link">VIEW FORMULATIONS &rsaquo;</span>
+              </div>
+              <div class="focus-featured-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/>
+                </svg>
+              </div>
+            </div>
           </article>
         </div>
       </section>
 
-      <section id="products" class="products-section">
-        <div class="section-heading">
-          <h2>Our Products</h2>
-          <p>A wide range of quality pharmaceutical products</p>
-        </div>
+      <!-- ── Compliance Bar ── -->
+      <div class="compliance-bar" aria-label="Certifications">
+        <span class="compliance-label">GLOBALLY RECOGNIZED COMPLIANCE:</span>
+        <span class="compliance-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          WHO-QMP
+        </span>
+        <span class="compliance-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 11 12 14 22 4"/></svg>
+          ISO 9001:2015
+        </span>
+        <span class="compliance-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
+          State Mfg. License
+        </span>
+      </div>
 
-        <div class="carousel-shell">
-          <button class="carousel-control prev" type="button" aria-label="Previous products">&lsaquo;</button>
-          <div class="product-track" tabindex="0" aria-label="Product carousel">
-            <article class="product-card" tabindex="0" role="button" data-category="Pain Relief" data-products="RESTMOL, RESTBRO" data-image="./assets/pain-relief-card.jpg">
-              <img class="product-card-image" src="./assets/pain-relief-card.jpg" alt="Back pain relief illustration" />
-              <h3>Pain Relief</h3>
-              <p>RESTMOL, RESTBRO</p>
-            </article>
-            <article class="product-card" tabindex="0" role="button" data-category="Antibiotics" data-products="ADDCEF, EOEUS TZ®, DIPEXTIL CV 325®, YORKMOX®, ADFOZEX®" data-image="./assets/antibiotics-card.jpg">
-              <img class="product-card-image" src="./assets/antibiotics-card.jpg" alt="Antibiotic capsule" />
-              <h3>Antibiotics</h3>
-              <p>ADDCEF, EOEUS TZ®, DIPEXTIL CV 325®, YORKMOX®, ADFOZEX®</p>
-            </article>
-            <article class="product-card" tabindex="0" role="button" data-category="Gastro / Acidity" data-products="PD STAR®" data-image="./assets/gastro-card.jpg">
-              <img class="product-card-image" src="./assets/gastro-card.jpg" alt="Gastro care illustration" />
-              <h3>Gastro / Acidity</h3>
-              <p>PD STAR®</p>
-            </article>
-            <article class="product-card" tabindex="0" role="button" data-category="Gout / Uric Acid" data-products="ADDBUX 40" data-image="./assets/gout-card.jpg">
-              <img class="product-card-image" src="./assets/gout-card.jpg" alt="Gout care product illustration" />
-              <h3>Gout / Uric Acid</h3>
-              <p>ADDBUX 40</p>
-            </article>
-            <article class="product-card" tabindex="0" role="button" data-category="Probiotics / Gut Health" data-products="PROTOCOCCUS®" data-image="./assets/probiotics-card.jpg">
-              <img class="product-card-image" src="./assets/probiotics-card.jpg" alt="Probiotics and gut health illustration" />
-              <h3>Probiotics / Gut Health</h3>
-              <p>PROTOCOCCUS®</p>
-            </article>
-          </div>
-          <button class="carousel-control next" type="button" aria-label="Next products">&rsaquo;</button>
-        </div>
-
-        <div class="product-showcase">
-          <img src="./assets/pharmacy-display-racks.jpg" alt="Pharmacy shelves stocked with medicines" />
-          <div>
-            <h3>Trusted Distribution Range</h3>
-            <p>
-              Tablets, capsules, syrups, injectables and everyday healthcare
-              essentials supplied with consistent availability.
-            </p>
+      <!-- ── About / Support Split ── -->
+      <section id="about" class="about-split-section">
+        <div class="about-split-copy">
+          <h2>Driven by Science,<br>Dedicated to Life.</h2>
+          <p>
+            For over a decade, Finder Pharma has operated at the intersection of rigorous scientific research and large-scale manufacturing excellence. Our state-of-the-art facilities ensure that every molecule synthesised meets the highest international standards of purity and efficacy.
+          </p>
+          <p>
+            We don't just manufacture drugs; we engineer solutions that improve patient outcomes globally. Partner with us for contract manufacturing, or explore our extensive proprietary portfolio.
+          </p>
+          <div class="about-split-actions">
+            <a class="primary-button" href="./about.html">LEARN ABOUT OUR FACILITIES</a>
+            <a class="primary-button about-outline-btn" href="./contact.html">CONTACT OUR TEAM</a>
           </div>
         </div>
 
-        <a class="primary-button compact" href="./contact.html">
-          View All Products
-          <span aria-hidden="true">&rarr;</span>
-        </a>
+        <div class="support-card-wrap">
+          <div class="support-card">
+            <div class="support-card-header">
+              <span class="support-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.36 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.59A16 16 0 0 0 14.9 15.6l1.95-1.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+              <div>
+                <strong>Dedicated Support</strong>
+                <span>Available for B2B Inquiries</span>
+              </div>
+            </div>
+            <hr class="support-divider" />
+            <ul class="support-list">
+              <li>
+                <span class="support-dot" aria-hidden="true"></span>
+                Comprehensive Contract Manufacturing Organization (CMO) services.
+              </li>
+              <li>
+                <span class="support-dot" aria-hidden="true"></span>
+                Rigorous quality control and regulatory affairs assistance.
+              </li>
+              <li>
+                <span class="support-dot" aria-hidden="true"></span>
+                Global export capabilities with complete documentation.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" class="products-section" style="display:none">
+        <!-- Hidden: products now shown in focus-bento above -->
       </section>
 
       <section id="commitment" class="commitment-section">
@@ -313,12 +327,12 @@
           <a href="./commitment.html">Our Commitment</a>
         </div>
         <div>
-          <h3>Our Products</h3>
-          <a href="./products.html">Tablets</a>
-          <a href="./products.html">Capsules</a>
-          <a href="./products.html">Syrups</a>
-          <a href="./products.html">Injectables</a>
-          <a href="./products.html">Other Products</a>
+          <h3>Therapeutic Segments</h3>
+          <a href="./products.html?category=Cardiac">Cardiac Care</a>
+          <a href="./products.html?category=Diabetic">Diabetic Care</a>
+          <a href="./products.html?category=Nutraceuticals">Nutraceuticals</a>
+          <a href="./products.html?category=Antibiotic">Antibiotics</a>
+          <a href="./products.html?category=Neuro%20and%20Psychiatry">Neuro & Psychiatry</a>
         </div>
         <div>
           <h3>Contact Us</h3>

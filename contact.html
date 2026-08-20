@@ -47,5 +47,15 @@
     </main>
     <footer class="site-footer"><p class="copyright">&copy; 2026 Finder Pharma. All Rights Reserved.</p></footer>
     <script src="./script.js"></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const product = urlParams.get('product');
+      if (product) {
+        const msgArea = document.querySelector('textarea[name="message"]');
+        if (msgArea) {
+          msgArea.value = `Hello, I would like to enquire about ${product} regarding availability, bulk orders, or franchise/distribution details.`;
+        }
+      }
+    </script>
   </body>
 </html>

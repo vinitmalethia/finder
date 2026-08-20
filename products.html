@@ -3,22 +3,499 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products | Finder Pharma</title>
+    <title>Our Pharmaceutical Portfolio | Finder Pharma</title>
     <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* ══════════════════════════════════════════════════
+         Pharmaceutical Portfolio Directory – Exact Layout
+      ══════════════════════════════════════════════════ */
+
+      body {
+        background: #f8fafc;
+      }
+
+      /* Hero Banner */
+      .portfolio-hero-section {
+        padding: 48px clamp(20px, 5vw, 76px) 36px;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .portfolio-hero-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .portfolio-hero-container h1 {
+        margin: 0 0 14px;
+        color: #0b1f44;
+        font-size: clamp(32px, 3.8vw, 48px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+
+      .portfolio-hero-container p {
+        margin: 0 0 28px;
+        color: #475569;
+        font-size: 15.5px;
+        line-height: 1.65;
+        max-width: 760px;
+      }
+
+      /* Search Input Bar */
+      .search-wrapper {
+        max-width: 580px;
+        position: relative;
+      }
+
+      .search-box-input-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #ffffff;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 10px 16px;
+        transition: all 180ms ease;
+      }
+
+      .search-box-input-wrap:focus-within {
+        border-color: #0a62c5;
+        box-shadow: 0 0 0 3px rgba(10, 98, 197, 0.12);
+      }
+
+      .search-box-input-wrap svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 2.2px;
+        color: #64748b;
+        flex: 0 0 auto;
+      }
+
+      .search-box-input-wrap input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 14.5px;
+        color: #0f172a;
+      }
+
+      .search-box-input-wrap input::placeholder {
+        color: #94a3b8;
+      }
+
+      .clear-btn {
+        display: none;
+        background: #e2e8f0;
+        border: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        color: #475569;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 1;
+        cursor: pointer;
+        place-items: center;
+      }
+
+      .clear-btn.visible {
+        display: grid;
+      }
+
+      /* Browse by Therapeutic Category */
+      .category-selection-section {
+        padding: 38px clamp(20px, 5vw, 76px) 28px;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .category-selection-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .category-selection-container h2 {
+        margin: 0 0 20px;
+        color: #0b1f44;
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+
+      .therapeutic-categories-row {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scrollbar-width: thin;
+      }
+
+      .therapeutic-categories-row::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      .therapeutic-categories-row::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 999px;
+      }
+
+      .therapeutic-cat-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        min-width: 160px;
+        height: 110px;
+        padding: 16px 14px;
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 180ms ease;
+        text-align: center;
+        flex: 1 0 auto;
+      }
+
+      .therapeutic-cat-card:hover {
+        border-color: #94a3b8;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(8, 43, 97, 0.06);
+      }
+
+      .therapeutic-cat-card.active {
+        border-color: #0a62c5;
+        box-shadow: 0 0 0 1px #0a62c5, 0 8px 20px rgba(10, 98, 197, 0.12);
+        background: #ffffff;
+      }
+
+      .cat-icon-wrap {
+        display: grid;
+        place-items: center;
+        color: #0b1f44;
+      }
+
+      .therapeutic-cat-card.active .cat-icon-wrap {
+        color: #0a62c5;
+      }
+
+      .cat-icon-wrap svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .cat-card-title {
+        margin: 0;
+        color: #0b1f44;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .therapeutic-cat-card.active .cat-card-title {
+        color: #0a62c5;
+      }
+
+      /* Active Category Products Section */
+      .portfolio-content-area {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 38px clamp(20px, 5vw, 76px) 64px;
+      }
+
+      .category-product-section {
+        margin-bottom: 40px;
+      }
+
+      .category-product-section[hidden] {
+        display: none !important;
+      }
+
+      .category-section-header {
+        margin-bottom: 24px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .header-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .header-title-wrap h2 {
+        margin: 0;
+        color: #0b1f44;
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -0.01em;
+      }
+
+      .count-pill {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #e2e8f0;
+        color: #334155;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 999px;
+      }
+
+      /* Cards Grid (4 Columns as per screenshot) */
+      .portfolio-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .pharma-portfolio-card {
+        display: flex;
+        flex-direction: column;
+        padding: 22px 20px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(8, 43, 97, 0.03);
+        transition: all 200ms ease;
+      }
+
+      .pharma-portfolio-card:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 10px 24px rgba(8, 43, 97, 0.08);
+        transform: translateY(-3px);
+      }
+
+      .pharma-portfolio-card.search-hidden {
+        display: none !important;
+      }
+
+      .card-badge-row {
+        margin-bottom: 12px;
+      }
+
+      .badge-dosage {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        background: #e0f2fe;
+        color: #0369a1;
+      }
+
+      .badge-tablet     { background: #e0f2fe; color: #0369a1; }
+      .badge-injectable { background: #e0f2fe; color: #0369a1; }
+      .badge-syrup      { background: #e0f2fe; color: #0369a1; }
+      .badge-capsule    { background: #e0f2fe; color: #0369a1; }
+      .badge-cream      { background: #e0f2fe; color: #0369a1; }
+      .badge-cr-tablet  { background: #e0f2fe; color: #0369a1; }
+      .badge-dt-tablet  { background: #e0f2fe; color: #0369a1; }
+      .badge-oral-solution { background: #e0f2fe; color: #0369a1; }
+      .badge-chewable   { background: #e0f2fe; color: #0369a1; }
+
+      .product-heading {
+        margin: 0 0 6px;
+        color: #0b1f44;
+        font-size: 18.5px;
+        font-weight: 900;
+        line-height: 1.2;
+      }
+
+      .product-composition {
+        margin: 0 0 18px;
+        color: #475569;
+        font-size: 13px;
+        line-height: 1.5;
+        min-height: 38px;
+      }
+
+      .product-meta-specs {
+        display: grid;
+        gap: 6px;
+        margin-top: auto;
+        margin-bottom: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #f1f5f9;
+      }
+
+      .spec-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12.5px;
+      }
+
+      .spec-k {
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      .spec-v {
+        color: #0b1f44;
+        font-weight: 700;
+        text-align: right;
+      }
+
+      .enquire-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 16px;
+        color: #0b1f44;
+        font-size: 13px;
+        font-weight: 700;
+        background: #ffffff;
+        border: 1px solid #0b1f44;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 150ms ease;
+      }
+
+      .enquire-action-btn:hover {
+        background: #0b1f44;
+        color: #ffffff;
+      }
+
+      .enquire-action-btn svg {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 auto;
+      }
+
+      /* Search Results View Header */
+      .search-results-header {
+        display: none;
+        margin-bottom: 24px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .search-results-header.visible {
+        display: block;
+      }
+
+      .search-results-header h2 {
+        margin: 0;
+        color: #0b1f44;
+        font-size: 22px;
+        font-weight: 800;
+      }
+
+      .search-results-header h2 span {
+        color: #0a62c5;
+      }
+
+      /* No Results Found */
+      .no-search-results {
+        display: none;
+        padding: 60px 20px;
+        text-align: center;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+      }
+
+      .no-search-results h3 {
+        margin: 0 0 8px;
+        color: #0b1f44;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .no-search-results p {
+        margin: 0 0 16px;
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .clear-search-trigger {
+        color: #0a62c5;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      /* Pagination (Exact as in screenshot) */
+      .pagination-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 48px;
+      }
+
+      .pagination-btn {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 150ms ease;
+      }
+
+      .pagination-btn:hover {
+        border-color: #0b1f44;
+      }
+
+      .pagination-btn.active {
+        background: #0b1f44;
+        border-color: #0b1f44;
+        color: #ffffff;
+      }
+
+      .pagination-btn.arrow {
+        font-size: 16px;
+        color: #64748b;
+      }
+
+      /* Responsive Breakpoints */
+      @media (max-width: 1200px) {
+        .portfolio-cards-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 860px) {
+        .portfolio-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 580px) {
+        .portfolio-cards-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .therapeutic-cat-card {
+          min-width: 140px;
+          height: 100px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <header class="site-header store-header">
-      <div class="header-main-row">
-        <a class="brand" href="./index.html" aria-label="Finder Pharma home">
-          <img src="./finder-pharma-logo.png" alt="Finder Pharma" />
-        </a>
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Finder Pharma home">
+        <img src="./finder-pharma-logo.png" alt="Finder Pharma" />
+      </a>
 
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">
-          <span></span><span></span><span></span>
-        </button>
-        
-        <!-- Navigation dropdown -->
-        <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
         <a href="./products.html" class="active">Products</a>
         <a href="./about.html">About Us</a>
@@ -27,421 +504,1532 @@
         <a href="./contact.html">Contact Us</a>
       </nav>
 
-        <div class="header-actions">
-          <a class="contact-pill" href="./contact.html">
-            <span aria-hidden="true">&#9742;</span>
-            Contact Us
+      <a class="contact-pill" href="./contact.html">
+        <span aria-hidden="true">&#9742;</span>
+        Contact Us
+      </a>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="portfolio-hero-section">
+        <div class="portfolio-hero-container">
+          <h1>Our Pharmaceutical Portfolio</h1>
+          <p>
+            Comprehensive documentation of Finder Pharma's approved formulations. Designed for healthcare professionals, this directory provides precise compositional data across our therapeutic categories.
+          </p>
+
+          <!-- Search Input Box -->
+          <div class="search-wrapper">
+            <div class="search-box-input-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input type="text" id="directory-search-input" placeholder="Search by product name, composition, or indication..." aria-label="Search by product name, composition, or indication" />
+              <button class="clear-btn" id="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Browse by Therapeutic Category -->
+      <section class="category-selection-section" aria-label="Browse by Therapeutic Category">
+        <div class="category-selection-container">
+          <h2>Browse by Therapeutic Category</h2>
+          <div class="therapeutic-categories-row" id="therapeutic-categories-track">
+        <div class="therapeutic-cat-card active" data-category="pain" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+          </div>
+          <h3 class="cat-card-title">Pain Relief</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="cardiac" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          </div>
+          <h3 class="cat-card-title">Cardiac</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="antibiotics" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg>
+          </div>
+          <h3 class="cat-card-title">Antibiotics</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="diabetic" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+          </div>
+          <h3 class="cat-card-title">Diabetic</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="gastro" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9c0 3.1 1.57 5.84 3.97 7.45"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <h3 class="cat-card-title">Gastro Care</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="probiotics" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 9V3"/><path d="M14 9V3"/><path d="M10 9a6 6 0 0 0-4 5.66V19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4.34A6 6 0 0 0 14 9Z"/></svg>
+          </div>
+          <h3 class="cat-card-title">Probiotics</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="nutra" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V17a1 1 0 0 1-2 0v-.07A8 8 0 0 1 4.07 11H4a1 1 0 0 1 0-2h.07A8 8 0 0 1 11 4.07V4a1 1 0 0 1 2 0v.07A8 8 0 0 1 19.93 11H20a1 1 0 0 1 0 2h-.07A8 8 0 0 1 13 16.93z"/></svg>
+          </div>
+          <h3 class="cat-card-title">Nutraceuticals</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="nephro" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <h3 class="cat-card-title">Nephro</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="neuro" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04Z"/></svg>
+          </div>
+          <h3 class="cat-card-title">Neuro &amp; Psychiatry</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="gout" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="cat-card-title">Gout / Uric Acid</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="hepato" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 class="cat-card-title">Hepato</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="derma" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 7.65l.78.77L12 20.64l7.64-7.64.78-.77a5.4 5.4 0 0 0 0-7.65z"/></svg>
+          </div>
+          <h3 class="cat-card-title">Derma</h3>
+        </div>
+        <div class="therapeutic-cat-card " data-category="gynae" tabindex="0" role="button">
+          <div class="cat-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>
+          </div>
+          <h3 class="cat-card-title">Gynae</h3>
+        </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Active Category Products List -->
+      <div class="portfolio-content-area">
+        <!-- Search Results Header (hidden unless searching) -->
+        <div class="search-results-header" id="search-results-title">
+          <h2>Search Results for: <span id="search-keyword-display"></span></h2>
+        </div>
+
+        <div id="all-category-sections">
+      <section class="category-product-section" id="cat-section-pain" data-cat="pain" >
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Pain Relief</h2>
+            <span class="count-pill">4 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="pain" data-name="restmol" data-comp="paracetamol 500mg + ibuprofen 400mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">RESTMOL</h3>
+          <p class="product-composition">Paracetamol 500mg + Ibuprofen 400mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=RESTMOL">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="pain" data-name="restbro" data-comp="aceclofenac 100mg + paracetamol 325mg + serratiopeptidase 15mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">RESTBRO</h3>
+          <p class="product-composition">Aceclofenac 100mg + Paracetamol 325mg + Serratiopeptidase 15mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=RESTBRO">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="pain" data-name="restmol aq" data-comp="diclofenac sodium injection 75mg/ml (aqua base)">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-injectable">Injectable</span>
+          </div>
+          <h3 class="product-heading">RESTMOL AQ</h3>
+          <p class="product-composition">Diclofenac Sodium Injection 75mg/ml (Aqua Base)</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">5 × 1ml Ampoule</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">36 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=RESTMOL AQ">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="pain" data-name="restbro-ds" data-comp="paracetamol paediatric oral suspension 250mg/5ml">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-syrup">Syrup</span>
+          </div>
+          <h3 class="product-heading">RESTBRO-DS</h3>
+          <p class="product-composition">Paracetamol Paediatric Oral Suspension 250mg/5ml</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">60ml Bottle</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=RESTBRO-DS">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-cardiac" data-cat="cardiac" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Cardiac</h2>
+            <span class="count-pill">9 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="addiibis" data-comp="bisoprolol fumarate tablets ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDIIBIS</h3>
+          <p class="product-composition">Bisoprolol Fumarate Tablets IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDIIBIS">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="amdornil®" data-comp="amlodipine besylate &amp; atenolol tablets ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">AMDORNIL®</h3>
+          <p class="product-composition">Amlodipine Besylate &amp; Atenolol Tablets IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=AMDORNIL®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="torstar®" data-comp="torsemide &amp; spironolactone tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">TORSTAR®</h3>
+          <p class="product-composition">Torsemide &amp; Spironolactone Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=TORSTAR®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="care-ngt®" data-comp="nitroglycerin controlled release tablets 2.6mg / 6.4mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">CARE-NGT®</h3>
+          <p class="product-composition">Nitroglycerin Controlled Release Tablets 2.6mg / 6.4mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">3 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=CARE-NGT®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="sv-arb®" data-comp="telmisartan &amp; s-amlodipine tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">SV-ARB®</h3>
+          <p class="product-composition">Telmisartan &amp; S-Amlodipine Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=SV-ARB®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="addirostin®" data-comp="rosuvastatin calcium tablets ip 10mg / 20mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDIROSTIN®</h3>
+          <p class="product-composition">Rosuvastatin Calcium Tablets IP 10mg / 20mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDIROSTIN®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="addpril®" data-comp="ramipril &amp; hydrochlorothiazide tablets ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDPRIL®</h3>
+          <p class="product-composition">Ramipril &amp; Hydrochlorothiazide Tablets IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDPRIL®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="telring®" data-comp="telmisartan tablets ip 40mg / 80mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">TELRING®</h3>
+          <p class="product-composition">Telmisartan Tablets IP 40mg / 80mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=TELRING®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="cardiac" data-name="steptor®" data-comp="atorvastatin &amp; clopidogrel capsules ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">STEPTOR®</h3>
+          <p class="product-composition">Atorvastatin &amp; Clopidogrel Capsules IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=STEPTOR®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-antibiotics" data-cat="antibiotics" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Antibiotics</h2>
+            <span class="count-pill">5 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="antibiotics" data-name="addcef" data-comp="cefixime dispersible tablets ip 100mg / 200mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDCEF</h3>
+          <p class="product-composition">Cefixime Dispersible Tablets IP 100mg / 200mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDCEF">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="antibiotics" data-name="eous tz®" data-comp="ofloxacin &amp; tinidazole tablets ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">EOUS TZ®</h3>
+          <p class="product-composition">Ofloxacin &amp; Tinidazole Tablets IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=EOUS TZ®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="antibiotics" data-name="dipextil cv 325®" data-comp="amoxycillin &amp; potassium clavulanate tablets ip 325mg / 625mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DIPEXTIL CV 325®</h3>
+          <p class="product-composition">Amoxycillin &amp; Potassium Clavulanate Tablets IP 325mg / 625mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 6 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DIPEXTIL CV 325®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="antibiotics" data-name="yorkmox®" data-comp="amoxycillin capsules ip 250mg / 500mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">YORKMOX®</h3>
+          <p class="product-composition">Amoxycillin Capsules IP 250mg / 500mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=YORKMOX®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="antibiotics" data-name="adfozex®" data-comp="ceftriaxone sodium injection ip 250mg / 500mg / 1g">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-injectable">Injectable</span>
+          </div>
+          <h3 class="product-heading">ADFOZEX®</h3>
+          <p class="product-composition">Ceftriaxone Sodium Injection IP 250mg / 500mg / 1g</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">Vial with WFI</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">36 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADFOZEX®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-diabetic" data-cat="diabetic" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Diabetic</h2>
+            <span class="count-pill">7 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="dartmet®" data-comp="metformin hydrochloride prolonged-release tablets ip 500mg / 1000mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DARTMET®</h3>
+          <p class="product-composition">Metformin Hydrochloride Prolonged-Release Tablets IP 500mg / 1000mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DARTMET®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="dartempa®" data-comp="empagliflozin &amp; metformin hydrochloride tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DARTEMPA®</h3>
+          <p class="product-composition">Empagliflozin &amp; Metformin Hydrochloride Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DARTEMPA®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="vildaboss®" data-comp="vildagliptin 50mg &amp; metformin hcl 500mg tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">VILDABOSS®</h3>
+          <p class="product-composition">Vildagliptin 50mg &amp; Metformin HCl 500mg Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=VILDABOSS®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="dartdapa®" data-comp="dapagliflozin tablets 5mg / 10mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DARTDAPA®</h3>
+          <p class="product-composition">Dapagliflozin Tablets 5mg / 10mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DARTDAPA®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="dartsita®" data-comp="sitagliptin phosphate tablets ip 50mg / 100mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DARTSITA®</h3>
+          <p class="product-composition">Sitagliptin Phosphate Tablets IP 50mg / 100mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DARTSITA®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="dartglip" data-comp="glimepiride &amp; metformin hydrochloride sr tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DARTGLIP</h3>
+          <p class="product-composition">Glimepiride &amp; Metformin Hydrochloride SR Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DARTGLIP">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="diabetic" data-name="silver cap" data-comp="alpha lipoic acid, methylcobalamin, benfotiamine &amp; pyridoxine hcl capsules">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">SILVER CAP</h3>
+          <p class="product-composition">Alpha Lipoic Acid, Methylcobalamin, Benfotiamine &amp; Pyridoxine HCl Capsules</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=SILVER CAP">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-gastro" data-cat="gastro" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Gastro Care</h2>
+            <span class="count-pill">3 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="gastro" data-name="pd star®" data-comp="pantoprazole gastro-resistant &amp; domperidone prolonged-release capsules ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">PD STAR®</h3>
+          <p class="product-composition">Pantoprazole Gastro-resistant &amp; Domperidone Prolonged-release Capsules IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=PD STAR®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="gastro" data-name="addbux 40" data-comp="febuxostat tablets ip 40mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDBUX 40</h3>
+          <p class="product-composition">Febuxostat Tablets IP 40mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDBUX 40">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="gastro" data-name="adulax®" data-comp="sodium picosulfate oral solution ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-syrup">Syrup</span>
+          </div>
+          <h3 class="product-heading">ADULAX®</h3>
+          <p class="product-composition">Sodium Picosulfate Oral Solution IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">100ml Bottle</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADULAX®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-probiotics" data-cat="probiotics" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Probiotics</h2>
+            <span class="count-pill">1 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="probiotics" data-name="protococcus®" data-comp="prebiotic &amp; probiotic capsules with fos">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">PROTOCOCCUS®</h3>
+          <p class="product-composition">Prebiotic &amp; Probiotic Capsules with FOS</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=PROTOCOCCUS®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-nutra" data-cat="nutra" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Nutraceuticals</h2>
+            <span class="count-pill">6 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="nutra" data-name="dartvit gold" data-comp="ginseng, multivitamins, multiminerals &amp; antioxidant softgel capsules">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">DARTVIT GOLD</h3>
+          <p class="product-composition">Ginseng, Multivitamins, Multiminerals &amp; Antioxidant Softgel Capsules</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DARTVIT GOLD">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="nutra" data-name="mecoboost" data-comp="methylcobalamin, pyridoxine hcl, folic acid &amp; niacinamide capsules / syrup">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule---syrup">Capsule / Syrup</span>
+          </div>
+          <h3 class="product-heading">MECOBOOST</h3>
+          <p class="product-composition">Methylcobalamin, Pyridoxine HCl, Folic Acid &amp; Niacinamide Capsules / Syrup</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu / 200ml</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=MECOBOOST">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="nutra" data-name="addii - d3 nano shot®" data-comp="cholecalciferol oral solution 60,000 iu (nano technology)">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-oral-solution">Oral Solution</span>
+          </div>
+          <h3 class="product-heading">ADDII - D3 NANO SHOT®</h3>
+          <p class="product-composition">Cholecalciferol Oral Solution 60,000 IU (Nano Technology)</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">4 × 5ml Shots</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">18 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDII - D3 NANO SHOT®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="nutra" data-name="drive d3®" data-comp="vitamin d3 (cholecalciferol) chewable tablets 60,000 iu">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">DRIVE D3®</h3>
+          <p class="product-composition">Vitamin D3 (Cholecalciferol) Chewable Tablets 60,000 IU</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 4 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DRIVE D3®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="nutra" data-name="drive qlc" data-comp="co-enzyme q10, l-carnitine, lycopene, zinc &amp; epa softgel capsules">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-capsule">Capsule</span>
+          </div>
+          <h3 class="product-heading">DRIVE QLC</h3>
+          <p class="product-composition">Co-Enzyme Q10, L-Carnitine, Lycopene, Zinc &amp; EPA Softgel Capsules</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=DRIVE QLC">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="nutra" data-name="adeno plus-xt" data-comp="ferrous ascorbate, folic acid &amp; zinc tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADENO PLUS-XT</h3>
+          <p class="product-composition">Ferrous Ascorbate, Folic Acid &amp; Zinc Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADENO PLUS-XT">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-nephro" data-cat="nephro" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Nephro</h2>
+            <span class="count-pill">2 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="nephro" data-name="torstar®" data-comp="torsemide tablets ip 10mg / 20mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">TORSTAR®</h3>
+          <p class="product-composition">Torsemide Tablets IP 10mg / 20mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=TORSTAR®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="nephro" data-name="addira" data-comp="alpha ketoanalogue &amp; essential amino acid tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDIRA</h3>
+          <p class="product-composition">Alpha Ketoanalogue &amp; Essential Amino Acid Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDIRA">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-neuro" data-cat="neuro" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Neuro &amp; Psychiatry</h2>
+            <span class="count-pill">4 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="neuro" data-name="satpam" data-comp="clonazepam &amp; escitalopram oxalate tablets ip">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">SATPAM</h3>
+          <p class="product-composition">Clonazepam &amp; Escitalopram Oxalate Tablets IP</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=SATPAM">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="neuro" data-name="voneuro®" data-comp="pregabalin, methylcobalamin &amp; nortriptyline hcl tablets">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">VONEURO®</h3>
+          <p class="product-composition">Pregabalin, Methylcobalamin &amp; Nortriptyline HCl Tablets</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=VONEURO®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="neuro" data-name="levetzer®" data-comp="levetiracetam tablets ip 250mg / 500mg / 750mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">LEVETZER®</h3>
+          <p class="product-composition">Levetiracetam Tablets IP 250mg / 500mg / 750mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=LEVETZER®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        <article class="pharma-portfolio-card" data-cat="neuro" data-name="ataxia-g400®" data-comp="gabapentin tablets ip 400mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ATAXIA-G400®</h3>
+          <p class="product-composition">Gabapentin Tablets IP 400mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Strip</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ATAXIA-G400®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-gout" data-cat="gout" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Gout / Uric Acid</h2>
+            <span class="count-pill">1 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="gout" data-name="addbux 40" data-comp="febuxostat tablets ip 40mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDBUX 40</h3>
+          <p class="product-composition">Febuxostat Tablets IP 40mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Blister</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDBUX 40">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-hepato" data-cat="hepato" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Hepato</h2>
+            <span class="count-pill">1 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="hepato" data-name="addurso®" data-comp="ursodeoxycholic acid tablets ip 150mg / 300mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDURSO®</h3>
+          <p class="product-composition">Ursodeoxycholic Acid Tablets IP 150mg / 300mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDURSO®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-derma" data-cat="derma" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Derma</h2>
+            <span class="count-pill">1 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="derma" data-name="zolmitop®" data-comp="luliconazole cream 1% w/w (topical antifungal)">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-cream">Cream</span>
+          </div>
+          <h3 class="product-heading">ZOLMITOP®</h3>
+          <p class="product-composition">Luliconazole Cream 1% w/w (Topical Antifungal)</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">15g / 30g Tube</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ZOLMITOP®">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+      <section class="category-product-section" id="cat-section-gynae" data-cat="gynae" hidden>
+        <div class="category-section-header">
+          <div class="header-title-wrap">
+            <h2>Gynae</h2>
+            <span class="count-pill">1 Products</span>
+          </div>
+        </div>
+        <div class="portfolio-cards-grid">
+        <article class="pharma-portfolio-card" data-cat="gynae" data-name="addiidydro-10" data-comp="dydrogesterone tablets ip 10mg">
+          <div class="card-badge-row">
+            <span class="badge-dosage badge-tablet">Tablet</span>
+          </div>
+          <h3 class="product-heading">ADDIIDYDRO-10</h3>
+          <p class="product-composition">Dydrogesterone Tablets IP 10mg</p>
+          <div class="product-meta-specs">
+            <div class="spec-line">
+              <span class="spec-k">Pack Size:</span>
+              <span class="spec-v">10 × 10 Alu-Alu</span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-k">Shelf Life:</span>
+              <span class="spec-v">24 Months</span>
+            </div>
+          </div>
+          <a class="enquire-action-btn" href="./contact.html?product=ADDIIDYDRO-10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Enquire Now
+          </a>
+        </article>
+        </div>
+      </section>
+        </div>
+
+        <!-- No search results box -->
+        <div class="no-search-results" id="no-search-results">
+          <h3>No formulations found</h3>
+          <p>No formulations matched your search keyword. Please try a different search term or browse by category.</p>
+          <span class="clear-search-trigger" id="reset-search-trigger">Reset Search</span>
+        </div>
+
+        <!-- Pagination (Exact from design) -->
+        <nav class="pagination-row" aria-label="Products pagination">
+          <button class="pagination-btn arrow" type="button" aria-label="Previous page">&lsaquo;</button>
+          <button class="pagination-btn active" type="button">1</button>
+          <button class="pagination-btn" type="button">2</button>
+          <button class="pagination-btn" type="button">3</button>
+          <span style="color:#64748b;padding:0 4px">…</span>
+          <button class="pagination-btn arrow" type="button" aria-label="Next page">&rsaquo;</button>
+        </nav>
+      </div>
+    </main>
+
+    <footer id="contact" class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <a class="brand footer-brand" href="./index.html" aria-label="Finder Pharma home">
+            <img src="./finder-pharma-logo.png" alt="Finder Pharma" />
+          </a>
+          <p>Quality Healthcare.<br />Trusted Always.</p>
+          <div class="socials" aria-label="Social links">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="WhatsApp">&#9742;</a>
+          </div>
+        </div>
+        <div>
+          <h3>Quick Links</h3>
+          <a href="./index.html">Home</a>
+          <a href="./products.html">Products</a>
+          <a href="./about.html">About Us</a>
+          <a href="./quality.html">Quality</a>
+          <a href="./commitment.html">Our Commitment</a>
+        </div>
+        <div>
+          <h3>Therapeutic Segments</h3>
+          <a href="./products.html?category=cardiac">Cardiac Care</a>
+          <a href="./products.html?category=diabetic">Diabetic Care</a>
+          <a href="./products.html?category=nutra">Nutraceuticals</a>
+          <a href="./products.html?category=antibiotics">Antibiotics</a>
+          <a href="./products.html?category=neuro">Neuro & Psychiatry</a>
+        </div>
+        <div>
+          <h3>Contact Us</h3>
+          <p>+91 98765 43210</p>
+          <p>info@finderpharma.com</p>
+          <p>123, Pharma Street,<br />Health City, India - 110001</p>
+        </div>
+        <div>
+          <h3>Enquiry</h3>
+          <a class="enquiry-button" href="mailto:info@finderpharma.com">
+            Send Enquiry
+            <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </div>
+      <p class="copyright">&copy; 2026 Finder Pharma. All Rights Reserved.</p>
+    </footer>
 
-      <!-- Search bar (Desktop) -->
-      <div class="search-bar desktop-search">
-        <input type="text" placeholder="Search for products..." aria-label="Search for products" />
-        <div class="category-select-wrapper">
-          <select aria-label="Select Category" class="category-select">
-            <option>All Categories</option>
-            <option>Vitamins & Supplements</option>
-            <option>Personal Care</option>
-            <option>Pain Relief</option>
-            <option>Digestive Care</option>
-          </select>
-        </div>
-        <button class="search-button" type="button" aria-label="Search">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Search bar (Mobile) -->
-      <div class="search-bar mobile-search">
-        <input type="text" placeholder="Search for products..." aria-label="Search for products" />
-        <button class="search-button" type="button" aria-label="Search">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </button>
-      </div>
-    </header>
-
-    <main class="store-main">
-      <!-- Promo Hero Section -->
-      <section class="store-hero">
-        <div class="hero-left">
-          <h1>Quality Healthcare Products You Can Trust</h1>
-          <p>Explore our wide range of pharmaceutical and healthcare products, developed to support better health and well-being.</p>
-          <a class="hero-shop-button" href="#products">Shop Now &rarr;</a>
-        </div>
-        <div class="hero-right">
-          <img src="./assets/hero-capsule-lab.png" alt="Premium supplements promotion" class="hero-illustration" />
-          
-          <div class="hero-badge-card">
-            <span class="badge-title">UP TO</span>
-            <span class="badge-percent">25%</span>
-            <span class="badge-off">OFF</span>
-            <span class="badge-footer">On Best Selling Products</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Category Circle Navigation -->
-      <section class="categories-section">
-        <div class="categories-track">
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-vitamins">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"></path>
-                <path d="M12 2v6"></path>
-                <path d="M12 8a4 4 0 0 1 4 4"></path>
-              </svg>
-            </div>
-            <span class="category-label">Vitamins &<br/>Supplements</span>
-          </div>
-
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-personal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-              </svg>
-            </div>
-            <span class="category-label">Personal Care<br/>& Hygiene</span>
-          </div>
-
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-pain">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect>
-                <circle cx="7" cy="12" r="1.5"></circle>
-                <circle cx="12" cy="12" r="1.5"></circle>
-                <circle cx="17" cy="12" r="1.5"></circle>
-              </svg>
-            </div>
-            <span class="category-label">Pain<br/>Relief</span>
-          </div>
-
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-digestive">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-              </svg>
-            </div>
-            <span class="category-label">Digestive<br/>& Stomach Care</span>
-          </div>
-
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-skin">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2s8 3.5 8 9.5a8 8 0 0 1-16 0C4 5.5 12 2 12 2z"></path>
-              </svg>
-            </div>
-            <span class="category-label">Skin Health<br/>& Beauty</span>
-          </div>
-
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-herbal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 22c1.25-3.87 3.96-6.8 7.37-8.12a8.68 8.68 0 0 1 4.54-.5c2.97.45 5.58 2.21 7.15 4.8A17.9 17.9 0 0 1 22 22H2z"></path>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10H8a15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
-            </div>
-            <span class="category-label">Herbal<br/>& Ayurveda</span>
-          </div>
-
-          <div class="category-circle-item">
-            <div class="category-circle-icon bg-feminine">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"></path>
-                <path d="M12 12V2M12 2a3 3 0 0 1 3 3"></path>
-              </svg>
-            </div>
-            <span class="category-label">Feminine<br/>Hygiene</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Flash Sale Section -->
-      <section class="store-section" id="products">
-        <div class="store-section-header">
-          <h2>Flash Sale</h2>
-          <a class="view-all-link" href="#view-all">View All &rarr;</a>
-        </div>
-        <div class="slider-wrapper">
-          <button class="slider-arrow prev" type="button" aria-label="Previous products" data-target="flash-sale-track">&lsaquo;</button>
-          <div class="store-product-track" id="flash-sale-track">
-            <!-- Card 1 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-20">20% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle white-bottle green-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">D3</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">2000 IU</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Vitamin D3 2000 IU</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-15">15% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle blue-bottle blue-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">OMEGA</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">Fish Oil</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Omega 3 Fish Oil</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 3 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-10">10% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle amber-bottle orange-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">PROBIO</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">Gut Health</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Probiotics For Gut Health</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 4 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-20">20% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle white-bottle darkgreen-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">ASHWA</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">500mg</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Ashwagandha 500mg</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 5 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-15">15% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle white-bottle orange-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">VIT C</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">1000mg</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Vitamin C 1000mg</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-          </div>
-          <button class="slider-arrow next" type="button" aria-label="Next products" data-target="flash-sale-track">&rsaquo;</button>
-        </div>
-      </section>
-
-      <!-- Best Sellers Section -->
-      <section class="store-section">
-        <div class="store-section-header">
-          <h2>Best Sellers</h2>
-          <a class="view-all-link" href="#view-all">View All &rarr;</a>
-        </div>
-        <div class="slider-wrapper">
-          <button class="slider-arrow prev" type="button" aria-label="Previous products" data-target="best-sellers-track">&lsaquo;</button>
-          <div class="store-product-track" id="best-sellers-track">
-            <!-- Card 1 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-20">20% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle white-bottle darkgreen-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">ASHWA</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">500mg</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Ashwagandha 500mg</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-15">15% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle blue-bottle blue-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">OMEGA</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">Fish Oil</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Omega 3 Fish Oil</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 3 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-10">10% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle amber-bottle orange-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">PROBIO</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">Gut Health</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Probiotics For Gut Health</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 4 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-20">20% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle white-bottle green-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">D3</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">2000 IU</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Vitamin D3 2000 IU</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-
-            <!-- Card 5 -->
-            <article class="store-product-card">
-              <div class="discount-badge pct-15">15% OFF</div>
-              <div class="product-illustration-area">
-                <div class="css-bottle white-bottle orange-label">
-                  <div class="cap"></div>
-                  <div class="neck"></div>
-                  <div class="body">
-                    <div class="label">
-                      <span class="label-heading">VIT C</span>
-                      <div class="label-bar"></div>
-                      <span class="label-subtext">1000mg</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h3 class="product-title">Vitamin C 1000mg</h3>
-              <a class="add-to-cart-button" href="./contact.html">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                Enquire Now
-              </a>
-            </article>
-          </div>
-          <button class="slider-arrow next" type="button" aria-label="Next products" data-target="best-sellers-track">&rsaquo;</button>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer"><p class="copyright">&copy; 2026 Finder Pharma. All Rights Reserved.</p></footer>
     <script src="./script.js"></script>
+    <script>
+      const categoryCards = [...document.querySelectorAll('.therapeutic-cat-card')];
+      const categorySections = [...document.querySelectorAll('.category-product-section')];
+      const searchInput = document.getElementById('directory-search-input');
+      const clearBtn = document.getElementById('search-clear-btn');
+      const searchHeader = document.getElementById('search-results-title');
+      const searchKeywordDisplay = document.getElementById('search-keyword-display');
+      const noResultsBox = document.getElementById('no-search-results');
+      const resetSearchTrigger = document.getElementById('reset-search-trigger');
+      const allProductCards = [...document.querySelectorAll('.pharma-portfolio-card')];
+
+      let selectedCategoryId = 'pain';
+
+      // Check URL params (e.g., products.html?category=cardiac)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCat = urlParams.get('category');
+      if (urlCat) {
+        const matched = categoryCards.find(c => c.dataset.category.toLowerCase() === urlCat.toLowerCase());
+        if (matched) {
+          selectedCategoryId = matched.dataset.category;
+        }
+      }
+
+      function showCategory(catId) {
+        selectedCategoryId = catId;
+        searchInput.value = '';
+        clearBtn.classList.remove('visible');
+        searchHeader.classList.remove('visible');
+        noResultsBox.style.display = 'none';
+
+        // Update active category card
+        categoryCards.forEach(card => {
+          card.classList.toggle('active', card.dataset.category === catId);
+        });
+
+        // Show only the selected category section, hide others
+        categorySections.forEach(sec => {
+          if (sec.dataset.cat === catId) {
+            sec.removeAttribute('hidden');
+            // Un-hide cards inside
+            sec.querySelectorAll('.pharma-portfolio-card').forEach(c => c.classList.remove('search-hidden'));
+          } else {
+            sec.setAttribute('hidden', '');
+          }
+        });
+      }
+
+      // Handle Category Card Click
+      categoryCards.forEach(card => {
+        card.addEventListener('click', () => {
+          showCategory(card.dataset.category);
+        });
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showCategory(card.dataset.category);
+          }
+        });
+      });
+
+      // Handle Search Input
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        clearBtn.classList.toggle('visible', query.length > 0);
+
+        if (query === '') {
+          showCategory(selectedCategoryId);
+          return;
+        }
+
+        // In search mode, search across all products across all categories
+        searchHeader.classList.add('visible');
+        searchKeywordDisplay.textContent = `"${searchInput.value.trim()}"`;
+
+        let totalMatches = 0;
+
+        categorySections.forEach(sec => {
+          const cardsInSec = sec.querySelectorAll('.pharma-portfolio-card');
+          let matchesInSec = 0;
+
+          cardsInSec.forEach(card => {
+            const name = card.dataset.name || '';
+            const comp = card.dataset.comp || '';
+            const matches = name.includes(query) || comp.includes(query);
+
+            if (matches) {
+              card.classList.remove('search-hidden');
+              matchesInSec++;
+              totalMatches++;
+            } else {
+              card.classList.add('search-hidden');
+            }
+          });
+
+          // Show section if it has matching products, else hide
+          if (matchesInSec > 0) {
+            sec.removeAttribute('hidden');
+          } else {
+            sec.setAttribute('hidden', '');
+          }
+        });
+
+        noResultsBox.style.display = totalMatches === 0 ? 'block' : 'none';
+      });
+
+      // Clear search
+      function clearSearch() {
+        searchInput.value = '';
+        showCategory(selectedCategoryId);
+        searchInput.focus();
+      }
+
+      clearBtn.addEventListener('click', clearSearch);
+      resetSearchTrigger.addEventListener('click', clearSearch);
+
+      // Pagination click feedback
+      document.querySelectorAll('.pagination-btn:not(.arrow)').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.pagination-btn:not(.arrow)').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+      // Initialize
+      showCategory(selectedCategoryId);
+    </script>
   </body>
 </html>

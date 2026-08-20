@@ -101,7 +101,7 @@ function closeProductModal() {
   productModal?.setAttribute("aria-hidden", "true");
 }
 
-document.querySelectorAll(".product-card[data-category]").forEach((card) => {
+document.querySelectorAll(".product-card[data-category], .focus-card[data-category]").forEach((card) => {
   card.addEventListener("click", () => openProductModal(card));
   card.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
