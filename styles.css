@@ -1148,8 +1148,9 @@ a {
 
 @media (max-width: 1060px) {
   .site-header {
-    grid-template-columns: auto auto auto;
+    display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .site-nav {
@@ -1576,18 +1577,11 @@ a {
   
   .store-header .menu-toggle {
     display: grid;
-    order: 1;
     margin: 0;
   }
   
   .store-header .brand {
-    order: 2;
-    margin: 0 auto;
     width: 140px;
-  }
-  
-  .store-header .header-actions {
-    order: 3;
   }
   
   .store-header .account-pill {
