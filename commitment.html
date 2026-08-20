@@ -5,62 +5,452 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Commitment | Finder Pharma</title>
     <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* ══════════════════════════════════════════════════
+         Our Commitment Page – Matching Reference Design
+      ══════════════════════════════════════════════════ */
+
+      /* Hero Section */
+      .commitment-hero-section {
+        padding: 56px clamp(20px, 5vw, 76px) 60px;
+        background: #f0f6fc;
+      }
+
+      .commitment-hero-container {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 52px;
+        align-items: center;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .philosophy-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        background: #e0f2fe;
+        color: #0369a1;
+        font-size: 12.5px;
+        font-weight: 800;
+        border-radius: 6px;
+        margin-bottom: 20px;
+      }
+
+      .philosophy-badge svg {
+        width: 15px;
+        height: 15px;
+        stroke-width: 2.2px;
+      }
+
+      .commitment-hero-copy h1 {
+        margin: 0 0 20px;
+        color: #0b1f44;
+        font-size: clamp(32px, 3.8vw, 50px);
+        font-weight: 900;
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+      }
+
+      .commitment-hero-copy p {
+        margin: 0;
+        color: #334155;
+        font-size: 16px;
+        line-height: 1.7;
+        max-width: 580px;
+      }
+
+      .commitment-hero-image {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 16px 44px rgba(8, 43, 97, 0.1);
+        background: #ffffff;
+      }
+
+      .commitment-hero-image img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-height: 380px;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      /* Pillars of Responsibility Section */
+      .pillars-section {
+        padding: 64px clamp(20px, 5vw, 76px) 80px;
+        background: #ffffff;
+      }
+
+      .pillars-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .pillars-header {
+        text-align: center;
+        max-width: 820px;
+        margin: 0 auto 48px;
+      }
+
+      .pillars-header h2 {
+        margin: 0 0 14px;
+        color: #0b1f44;
+        font-size: clamp(28px, 2.8vw, 38px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+      }
+
+      .pillars-header p {
+        margin: 0;
+        color: #475569;
+        font-size: 15.5px;
+        line-height: 1.65;
+      }
+
+      /* Pillars Bento Grid */
+      .pillars-bento-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .pillars-bottom-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.8fr;
+        gap: 24px;
+      }
+
+      .pillar-card {
+        padding: 32px 28px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(8, 43, 97, 0.04);
+        display: flex;
+        flex-direction: column;
+        transition: all 200ms ease;
+      }
+
+      .pillar-card:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 12px 32px rgba(8, 43, 97, 0.08);
+        transform: translateY(-3px);
+      }
+
+      .pillar-icon-box {
+        display: inline-grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        background: #f0f7ff;
+        border: 1px solid #dbeafe;
+        border-radius: 8px;
+        color: #0b1f44;
+        margin-bottom: 20px;
+      }
+
+      .pillar-icon-box svg {
+        width: 22px;
+        height: 22px;
+        stroke-width: 1.8px;
+      }
+
+      .pillar-card h3 {
+        margin: 0 0 16px;
+        color: #0b1f44;
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+
+      .pillar-card hr {
+        border: 0;
+        border-top: 1px solid #f1f5f9;
+        margin: 0 0 16px;
+      }
+
+      .pillar-card p {
+        margin: 0 0 16px;
+        color: #475569;
+        font-size: 14.5px;
+        line-height: 1.65;
+      }
+
+      .pillar-card p:last-child {
+        margin-bottom: 0;
+      }
+
+      .pillar-checklist {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .checklist-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #1e293b;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .check-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 18px;
+        width: 18px;
+        height: 18px;
+        background: #0f172a;
+        color: #ffffff;
+        border-radius: 50%;
+        font-size: 11px;
+      }
+
+      /* Sustainable Manufacturing Banner Card */
+      .sustainable-banner-card {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-shadow: 0 4px 18px rgba(8, 43, 97, 0.04);
+        border: 1px solid #e2e8f0;
+      }
+
+      .sustainable-banner-card img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .sustainable-banner-content {
+        position: relative;
+        z-index: 2;
+        padding: 24px 28px;
+        background: linear-gradient(180deg, rgba(8, 30, 68, 0.82) 0%, rgba(5, 20, 48, 0.96) 100%);
+        color: #ffffff;
+      }
+
+      .sustainable-banner-content h3 {
+        margin: 0 0 6px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .sustainable-banner-content p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* Responsive */
+      @media (max-width: 960px) {
+        .commitment-hero-container {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+
+        .pillars-bento-grid,
+        .pillars-bottom-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .sustainable-banner-card {
+          min-height: 220px;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="Finder Pharma home"><img src="./finder-pharma-logo.png" alt="Finder Pharma" /></a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <a class="brand" href="./index.html" aria-label="Finder Pharma home">
+        <img src="./finder-pharma-logo.png" alt="Finder Pharma" />
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+
       <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
         <a href="./index.html">Home</a>
         <a href="./products.html">Products</a>
         <a href="./about.html">About Us</a>
         <a href="./quality.html">Quality</a>
-        <a href="./commitment.html">Our Commitment</a>
+        <a href="./commitment.html" class="active">Our Commitment</a>
         <a href="./contact.html">Contact Us</a>
       </nav>
-      <a class="contact-pill" href="./contact.html"><span aria-hidden="true">&#9742;</span>Contact Us</a>
+
+      <a class="contact-pill" href="./contact.html">
+        <span aria-hidden="true">&#9742;</span>
+        Contact Us
+      </a>
     </header>
+
     <main>
-      <section class="page-hero">
-        <p class="eyebrow">Our Commitment</p>
-        <h1>Committed to trust, reliability and responsible healthcare.</h1>
-        <p>We are committed to maintaining high standards throughout our journey and building a pharmaceutical brand that healthcare professionals and customers can trust.</p>
+      <!-- Hero Section -->
+      <section class="commitment-hero-section">
+        <div class="commitment-hero-container">
+          <div class="commitment-hero-copy">
+            <span class="philosophy-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+              Our Core Philosophy
+            </span>
+            <h1>A Dedication to Global Health &amp; Well-being</h1>
+            <p>
+              At Finder Pharma, our commitment transcends manufacturing. We are driven by a profound responsibility to improve patient outcomes, ensure universal access to critical medications, and operate with unwavering ethical standards.
+            </p>
+          </div>
+          <div class="commitment-hero-image">
+            <img src="./assets/hero-research.jpg" alt="Finder Pharma research team collaborating in state-of-the-art laboratory" />
+          </div>
+        </div>
       </section>
-      <section class="commitment-section">
-        <article class="commitment-main">
-          <figure class="commitment-photo"><img src="./assets/medical-supplies.jpg" alt="Healthcare supplies, medicines and clinical essentials" /></figure>
-          <div><h2>Our Commitment</h2><p><strong>At Finder Pharma, quality is not just a standard, it is a responsibility.</strong></p><p>We are committed to maintaining high standards throughout our journey and building a pharmaceutical brand that healthcare professionals and customers can trust.</p></div>
-        </article>
-        <article>
-          <span class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-          </span>
-          <h3>Our Vision</h3>
-          <p>To build Finder Pharma as a trusted pharmaceutical brand known for quality, reliability and responsible healthcare.</p>
-        </article>
-        <article>
-          <span class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <circle cx="12" cy="12" r="6"></circle>
-              <circle cx="12" cy="12" r="2"></circle>
-            </svg>
-          </span>
-          <h3>Our Mission</h3>
-          <ul>
-            <li>Provide quality pharmaceutical products with consistent standards.</li>
-            <li>Maintain transparency and responsibility across operations.</li>
-            <li>Continuously improve our products and processes.</li>
-            <li>Make reliable healthcare solutions more accessible.</li>
-            <li>Build long-term trust with healthcare professionals, partners and customers.</li>
-          </ul>
-        </article>
+
+      <!-- Pillars of Responsibility Section -->
+      <section class="pillars-section" aria-label="Pillars of Responsibility">
+        <div class="pillars-container">
+          <div class="pillars-header">
+            <h2>Pillars of Responsibility</h2>
+            <p>
+              Our strategic approach to corporate social responsibility is built on three foundational pillars designed to create lasting, positive societal impact.
+            </p>
+          </div>
+
+          <!-- Top Row: Patient-First Philosophy (Left) + Global Access (Right) -->
+          <div class="pillars-bento-grid">
+            <!-- Pillar 1 -->
+            <article class="pillar-card">
+              <span class="pillar-icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+              </span>
+              <h3>Patient-First Philosophy</h3>
+              <hr />
+              <p>
+                Every formulation we develop and every manufacturing process we refine is centered around patient safety and efficacy. We maintain rigorous pharmacovigilance protocols and actively engage with healthcare professionals to continuously monitor and improve patient outcomes.
+              </p>
+              <div class="pillar-checklist">
+                <div class="checklist-item">
+                  <span class="check-icon">&#10003;</span>
+                  <span>Rigorous Phase IV clinical monitoring</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="check-icon">&#10003;</span>
+                  <span>Transparent patient education initiatives</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Pillar 2 -->
+            <article class="pillar-card">
+              <span class="pillar-icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </span>
+              <h3>Global Access</h3>
+              <hr />
+              <p>
+                We believe life-saving medications should be accessible to all. Through strategic NGO partnerships and tiered pricing models, we are bridging the healthcare gap in developing regions.
+              </p>
+            </article>
+          </div>
+
+          <!-- Bottom Row: Ethical Operations (Left) + Sustainable Manufacturing (Right) -->
+          <div class="pillars-bottom-grid">
+            <!-- Pillar 3 -->
+            <article class="pillar-card">
+              <span class="pillar-icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v18"/>
+                  <path d="M5 8l7-5 7 5"/>
+                  <path d="M5 14h14"/>
+                  <path d="M7 21h10"/>
+                </svg>
+              </span>
+              <h3>Ethical Operations</h3>
+              <hr />
+              <p>
+                Our operations are bound by an unwavering code of ethics, ensuring compliance with global regulatory standards, environmental sustainability, and fair labor practices across our supply chain.
+              </p>
+            </article>
+
+            <!-- Pillar 4: Sustainable Manufacturing Banner -->
+            <article class="sustainable-banner-card">
+              <img src="./assets/hero-lab.png" alt="Finder Pharma clean sustainable manufacturing facility" />
+              <div class="sustainable-banner-content">
+                <h3>Sustainable Manufacturing</h3>
+                <p>Committing to zero-carbon emissions by 2040 through advanced green chemistry.</p>
+              </div>
+            </article>
+          </div>
+        </div>
       </section>
     </main>
-    <footer class="site-footer"><p class="copyright">&copy; 2026 Finder Pharma. All Rights Reserved.</p></footer>
+
+    <footer id="contact" class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <a class="brand footer-brand" href="./index.html" aria-label="Finder Pharma home">
+            <img src="./finder-pharma-logo.png" alt="Finder Pharma" />
+          </a>
+          <p>Quality Healthcare.<br />Trusted Always.</p>
+          <div class="socials" aria-label="Social links">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="WhatsApp">&#9742;</a>
+          </div>
+        </div>
+        <div>
+          <h3>Quick Links</h3>
+          <a href="./index.html">Home</a>
+          <a href="./products.html">Products</a>
+          <a href="./about.html">About Us</a>
+          <a href="./quality.html">Quality</a>
+          <a href="./commitment.html">Our Commitment</a>
+        </div>
+        <div>
+          <h3>Therapeutic Segments</h3>
+          <a href="./products.html?category=cardiac">Cardiac Care</a>
+          <a href="./products.html?category=diabetic">Diabetic Care</a>
+          <a href="./products.html?category=nutra">Nutraceuticals</a>
+          <a href="./products.html?category=antibiotics">Antibiotics</a>
+          <a href="./products.html?category=neuro">Neuro & Psychiatry</a>
+        </div>
+        <div>
+          <h3>Contact Us</h3>
+          <p>+91 98765 43210</p>
+          <p>info@finderpharma.com</p>
+          <p>123, Pharma Street,<br />Health City, India - 110001</p>
+        </div>
+        <div>
+          <h3>Enquiry</h3>
+          <a class="enquiry-button" href="mailto:info@finderpharma.com">
+            Send Enquiry
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2026 Finder Pharma. All Rights Reserved. Regulatory Compliance: WHO-GMP & ISO Certified.</p>
+    </footer>
+
     <script src="./script.js"></script>
   </body>
 </html>
